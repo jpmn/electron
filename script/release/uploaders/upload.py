@@ -205,8 +205,7 @@ def get_release(version):
   script_path = os.path.join(
     ELECTRON_DIR, 'script', 'release', 'find-github-release.js')
   release_info = execute(['node', script_path, version])
-  release = json.loads(release_info)
-  return release
+  return json.loads(release_info)
 
 if __name__ == '__main__':
   sys.exit(main())

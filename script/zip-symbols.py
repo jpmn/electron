@@ -30,16 +30,16 @@ def main():
     make_zip(zip_file, licenses, dirs)
 
   if PLATFORM == 'darwin':
-    dsym_name = 'dsym.zip'
     with scoped_cwd(args.build_dir):
       dsyms = glob.glob('*.dSYM')
+      dsym_name = 'dsym.zip'
       dsym_zip_file = os.path.join(args.build_dir, dsym_name)
       print('Making dsym zip: ' + dsym_zip_file)
       make_zip(dsym_zip_file, licenses, dsyms)
   elif PLATFORM == 'win32':
-    pdb_name = 'pdb.zip'
     with scoped_cwd(args.build_dir):
       pdbs = glob.glob('*.pdb')
+      pdb_name = 'pdb.zip'
       pdb_zip_file = os.path.join(args.build_dir, pdb_name)
       print('Making pdb zip: ' + pdb_zip_file)
       make_zip(pdb_zip_file, pdbs + licenses, [])

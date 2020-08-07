@@ -41,8 +41,7 @@ class GNArgs:
     # E.g. ['version', '"1.0.0"']
     name_and_raw_value = name_with_raw_value.split(' = ')
 
-    raw_value = name_and_raw_value[1]
-    return raw_value
+    return name_and_raw_value[1]
 
   def get_string(self, name):
     # Expects to get a string in double quotes, e.g. '"some_value"'.

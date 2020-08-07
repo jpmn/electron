@@ -16,9 +16,7 @@ def is_repo_root(path):
     return False
 
   git_folder_path = os.path.join(path, '.git')
-  git_folder_exists = os.path.exists(git_folder_path)
-
-  return git_folder_exists
+  return os.path.exists(git_folder_path)
 
 
 def get_repo_root(path):
@@ -82,8 +80,7 @@ def apply_patch(repo, patch_path, directory=None, index=False, reverse=False):
   args += ['--', patch_path]
 
   return_code = subprocess.call(args)
-  applied_successfully = (return_code == 0)
-  return applied_successfully
+  return (return_code == 0)
 
 
 def import_patches(repo, **kwargs):
@@ -140,5 +137,4 @@ def commit(repo, author, message):
           ]
 
   return_code = subprocess.call(args, env=env)
-  committed_successfully = (return_code == 0)
-  return committed_successfully
+  return (return_code == 0)

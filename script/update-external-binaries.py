@@ -24,8 +24,7 @@ def parse_args():
 def parse_config():
   config_path = os.path.join(SOURCE_ROOT, 'script', 'external-binaries.json')
   with open(config_path, 'r') as config_file:
-    config = json.load(config_file)
-    return config
+    return json.load(config_file)
 
 
 def main():
@@ -76,16 +75,12 @@ def binary_should_be_downloaded(binary):
   if 'platform' in binary and binary['platform'] != PLATFORM:
     return False
 
-  if 'targetArch' in binary and binary['targetArch'] != get_target_arch():
-    return False
-
-  return True
+  return 'targetArch' not in binary or binary['targetArch'] == get_target_arch()
 
 
 def download_binary(base_url, version, binary_url):
   full_url = '{0}/{1}/{2}'.format(base_url, version, binary_url)
-  temp_path = download_to_temp_dir(full_url, filename=binary_url)
-  return temp_path
+  return download_to_temp_dir(full_url, filename=binary_url)
 
 
 def download_to_temp_dir(url, filename):
