@@ -33,8 +33,7 @@ class Verbosity:
   @staticmethod
   def __get_indices(*values):
     ordered = Verbosity.__get_all_in_order()
-    indices = map(ordered.index, values)
-    return indices
+    return map(ordered.index, values)
 
   @staticmethod
   def ge(a, b):
@@ -95,8 +94,7 @@ class TestsList():
 
   def get_for_current_platform(self):
     all_binaries = self.tests.keys()
-    supported_binaries = filter(self.__platform_supports, all_binaries)
-    return supported_binaries
+    return filter(self.__platform_supports, all_binaries)
 
   def run(self, binaries, output_dir=None, verbosity=Verbosity.CHATTY,
       disabled_tests_policy=DisabledTestsPolicy.DISABLE):
@@ -116,10 +114,9 @@ class TestsList():
             "binary {0} cannot be run on {1}, check the config".format(
                 binary_name, Platform.get_current()))
 
-    suite_returncode = sum(
-        [self.__run(binary, output_dir, verbosity, disabled_tests_policy)
-        for binary in binaries])
-    return suite_returncode
+    return sum(
+        self.__run(binary, output_dir, verbosity, disabled_tests_policy)
+        for binary in binaries)
 
   def run_only(self, binary_name, output_dir=None, verbosity=Verbosity.CHATTY,
       disabled_tests_policy=DisabledTestsPolicy.DISABLE):
@@ -275,9 +272,8 @@ class TestBinary():
     included_tests_string = TestBinary.__list_tests(included_tests)
     excluded_tests_string = TestBinary.__list_tests(excluded_tests)
 
-    gtest_filter = "--gtest_filter={}-{}".format(included_tests_string,
+    return "--gtest_filter={}-{}".format(included_tests_string,
                                                  excluded_tests_string)
-    return gtest_filter
 
   @staticmethod
   def __get_gtest_output(output_file_path):

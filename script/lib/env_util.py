@@ -9,7 +9,7 @@ import sys
 
 
 def validate_pair(ob):
-  if not (len(ob) == 2):
+  if len(ob) != 2:
     print("Unexpected result:", ob, file=sys.stderr)
     return False
   else:
@@ -61,28 +61,27 @@ def get_environment_from_batch_command(env_cmd, initial=None):
   return result
 
 def get_vs_location(vs_version):
-    """
+  """
     Returns the location of the VS building environment.
 
     The vs_version can be strings like "[15.0,16.0)", meaning 2017,
     but not the next version.
     """
 
-    # vswhere can't handle spaces. "[15.0, 16.0)" should become "[15.0,16.0)"
-    vs_version = vs_version.replace(" ", "")
+  # vswhere can't handle spaces. "[15.0, 16.0)" should become "[15.0,16.0)"
+  vs_version = vs_version.replace(" ", "")
 
-    program_files = os.environ.get('ProgramFiles(x86)')
-    # Find visual studio
-    proc = subprocess.Popen(
-      program_files + "\\Microsoft Visual Studio\\Installer\\vswhere.exe "
-      "-property installationPath "
-      "-requires Microsoft.VisualStudio.Component.VC.CoreIde "
-      "-format value "
-      "-version {0}".format(vs_version),
-      stdout=subprocess.PIPE)
+  program_files = os.environ.get('ProgramFiles(x86)')
+  # Find visual studio
+  proc = subprocess.Popen(
+    program_files + "\\Microsoft Visual Studio\\Installer\\vswhere.exe "
+    "-property installationPath "
+    "-requires Microsoft.VisualStudio.Component.VC.CoreIde "
+    "-format value "
+    "-version {0}".format(vs_version),
+    stdout=subprocess.PIPE)
 
-    location = proc.stdout.readline().rstrip()
-    return location
+  return proc.stdout.readline().rstrip()
 
 def get_vs_env(vs_version, arch):
   """
